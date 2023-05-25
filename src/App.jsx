@@ -1,6 +1,15 @@
+import { useState } from "react";
 import "./App.css";
 
 function App() {
+  const [itemToAdd,setItemToAdd] = useState();
+  const [itens,setItens] = useState([])
+  const handleAddItem = (item) => {
+    if(item){
+      setItens(p => [...p,item])
+    }
+
+  }
   return (
     <div className="App">
       <header>
@@ -8,22 +17,20 @@ function App() {
       </header>
       <div className="lista-compras-container">
         <ul className="lista-items">
-          <li>Queijo</li>
-          <li>Leite</li>
-          <li>Pão</li>
+          {itens.map((item,index)=> {
+            return <li key={index}>{item}</li>
+          })}
         </ul>
       </div>
-      <form className="form-add-item" action="#" method="post">
-        <fieldset>
+      <fieldset>
           <div className="form-group mb-3">
             <label htmlFor="item">Adicionar Novo Item na Lista:</label>
-            <input type="text" className="form-control" id="item" />
+            <input type="text" className="form-control" id="item" onChange={(e)=> setItemToAdd(e.target.value)} />
           </div>
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-primary" onClick={()=> handleAddItem(itemToAdd)}>
             Adicionar
           </button>
         </fieldset>
-      </form>
     </div>
   );
 }
